@@ -51,6 +51,11 @@ class LegacySkinAdapter implements SkinAdapter{
 			SkinImage::fromLegacy($skin->getSkinData()), [],
 			$capeImage,
 			$skin->getGeometryData(),
+			//TODO: HACK! 1.19.60 requires fullSkinID to be the same as the client's local skin's fullSkinID, otherwise
+			//it will reject the skin and turn into Steve. This is a problem, because we can't guarantee that fullSkinID
+			//isn't colliding with a different skin used by a different player, which means that malicious clients can
+			//corrupt any skin on the server by using a skin with the same full skin ID. Normally we would use a random
+			//UUID to avoid this.
 			fullSkinId: $skin->getSkinId(),
 		);
 	}
